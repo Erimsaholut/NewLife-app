@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:new_life/islands.dart';
+
+import 'my_button.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+Color themeColor1 = const Color.fromARGB(255, 48, 227, 202);
+Color themeColor2 = const Color.fromARGB(255, 17, 153, 158);
+Color themeColor3 = const Color.fromARGB(255, 228, 249, 245);
+Color themeColor4 = const Color.fromARGB(255, 64, 81, 78);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,28 +44,39 @@ class _MyHomePageState extends State<MyHomePage> {
           "New Life",
           style: TextStyle(),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: themeColor2,
       ),
-      body: ListView(
-        children:[Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.brown),
+      body: Container(
+        color: themeColor3,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView(children: [
+            const SizedBox(height: 20),
+            Island(
+              themeColor: themeColor2,
+              text: formattedDate(),
+
+            ),
+
+            Island(
+              size: 2,
+              themeColor: themeColor1,
+            ),
+            Island(
+
+              themeColor: themeColor4,
+            ),
+            Island(
+              themeColor: themeColor2,
+            ),
+            Island(
+              themeColor: themeColor1,
+            ),
+            Island(
+              themeColor: themeColor4,
+            ),
+          ]),
         ),
-        SizedBox(height: 20),
-        Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.red),
-        ),
-        SizedBox(height: 20),
-        Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.grey),
-        ),
-        SizedBox(height: 20),
-        Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.brown),
-        ),]
       ),
     );
   }
