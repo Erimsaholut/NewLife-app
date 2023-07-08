@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_life/daily_quote.dart';
 
 class Island extends StatelessWidget {
   final Color themeColor;
@@ -27,7 +28,9 @@ class Island extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(32.0)),
           ),
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              print(dailyQuote());
+            },
             child: Row(
               children: [
                 if (myIcon != null)

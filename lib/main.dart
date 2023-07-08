@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_life/daily_quote.dart';
 import 'package:new_life/islands.dart';
-
-import 'my_button.dart';
+import 'formatted_date.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +11,7 @@ Color themeColor1 = const Color.fromARGB(255, 48, 227, 202);
 Color themeColor2 = const Color.fromARGB(255, 17, 153, 158);
 Color themeColor3 = const Color.fromARGB(255, 228, 249, 245);
 Color themeColor4 = const Color.fromARGB(255, 64, 81, 78);
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -56,11 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
               themeColor: themeColor2,
               text: formattedDate(),
 
-            ),
+            ),/*Tarih*/
 
             Island(
-              size: 2,
               themeColor: themeColor1,
+
             ),
             Island(
 
@@ -68,7 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Island(
               themeColor: themeColor2,
-            ),
+              size: 2,
+              text: dailyQuote(),
+            ),/*Günün Sözü*/
             Island(
               themeColor: themeColor1,
             ),
