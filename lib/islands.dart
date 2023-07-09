@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_life/daily_quote.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Island extends StatelessWidget {
   final Color themeColor;
   final IconData? myIcon;
-
   final String text;
-
   final double size;
 
   const Island({
@@ -22,15 +20,14 @@ class Island extends StatelessWidget {
     return Column(
       children: [
         Container(
+          padding: const EdgeInsets.all(10),
           height: 100 * size,
           decoration: BoxDecoration(
             color: themeColor,
             borderRadius: const BorderRadius.all(Radius.circular(32.0)),
           ),
           child: TextButton(
-            onPressed: () {
-              print(dailyQuote());
-            },
+            onPressed: () {},
             child: Row(
               children: [
                 if (myIcon != null)
@@ -43,8 +40,9 @@ class Island extends StatelessWidget {
                 Expanded(
                   flex: myIcon != null ? 3 : 4,
                   child: Center(
-                    child: Text(
+                    child: AutoSizeText(
                       text,
+                      maxLines: 6,
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
