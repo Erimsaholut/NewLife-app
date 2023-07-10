@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_life/daily_quote.dart'as quote_utils;
+import 'package:new_life/daily_quote.dart' as quote_utils;
 import 'package:new_life/islands.dart';
+import 'package:new_life/widgetIsland.dart';
 import 'chain.dart' as chain_utils;
+import 'chain.dart';
 import 'formatted_date.dart';
 
 void main() {
@@ -15,6 +17,8 @@ Color themeColor4 = const Color.fromARGB(255, 228, 249, 245);
 
 String chainText = "";
 String quoteText = "";
+String enteredText = "";
+bool editChain = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key,required this.title});
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -48,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void initializeChain() async {
     String chain = await chain_utils.chain();
-    String quote = await quote_utils.dailyQuote();// chain fonksiyonunu çağırarak zincirin durumunu alıyoruz
+    String quote = await quote_utils.dailyQuote();
     setState(() {
       chainText = chain;
       quoteText = quote;
@@ -75,18 +79,66 @@ class _MyHomePageState extends State<MyHomePage> {
               Island(
                 themeColor: themeColor2,
                 text: formattedDate(),
-              ), // Tarih
-              Island(
-                themeColor: themeColor1,
-                text: chainText, // chainText değişkenini kullanarak zincirin durumunu gösteriyoruz
               ),
-              Island(themeColor: themeColor3,size: 2,),
+              /*Tarih*/
+
+              Island(
+                  themeColor: themeColor1,
+                  text: chainText,
+                  onLongPressed: () {
+                    setState(() {
+                      print("kırıldı");
+                      breakChain();
+                    });
+                  },
+                  onPressed: (){setState(() {
+                    editChain=true;
+                  });},
+              ),
+              /* Chain */
+//todo şu widgetları taşıyabildiğin kadar dışarı taşi bide uygulamayı kapatıp tekrar açan bir fonksiyon bul oluyorsa chain üzerinden bir fonksiyon bul
+              WidgetIsland(
+                isVisible: editChain,
+                themeColor: themeColor2,
+                size: 2,
+                widget: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
+                        ),
+                        onChanged: (value) {
+                          enteredText =
+                              value; // TextField'dan alınan veriyi enteredText değişkenine ata
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            startChain();
+                          });
+                          print(enteredText); // Konsola enteredText'i yazdır
+                          editChain = false;
+                        },
+                        child: Text("Veriyi Al ve Yazdır"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Island(
+                themeColor: themeColor3,
+                size: 2,
+              ),
               Island(themeColor: themeColor1),
               Island(
                 themeColor: themeColor2,
                 size: 2,
                 text: quoteText,
               ),
+              /*quote*/
               Island(themeColor: themeColor3),
             ],
           ),

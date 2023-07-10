@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'dart:convert' show json;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:new_life/islands.dart';
 
 String quotePath = "assets/quotes/daily_quotes.json";
 
@@ -23,4 +25,18 @@ Future<String> dailyQuote() async {
     quote += datas[todaysNumber - 1]["owner"];
   }
   return quote;
+}
+
+class Chain extends StatefulWidget {
+  const Chain({super.key});
+
+  @override
+  State<Chain> createState() => _ChainState();
+}
+
+class _ChainState extends State<Chain>{
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
