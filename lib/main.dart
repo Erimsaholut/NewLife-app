@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:new_life/daily_quote.dart' as quote_utils;
-import 'package:new_life/islands.dart';
+import 'package:new_life/tools/styles.dart';
 import 'package:new_life/widgetIsland.dart';
+import 'package:flutter/material.dart';
+import 'package:new_life/islands.dart';
 import 'chain.dart' as chain_utils;
-import 'chain.dart';
 import 'formatted_date.dart';
+import 'chain.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,19 +83,51 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               /*Tarih*/
 
+              //todo 100 satır chain
               Island(
-                  themeColor: themeColor1,
-                  text: chainText,
-                  onLongPressed: () {
+                themeColor: themeColor1,
+                text: chainText,
+                onLongPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Confirmation"),
+                        content: Text("Are you sure you want to break the chain?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text("No"),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop(); // Close the dialog
+                              String year = await getYear();
+                              if (year != "null") {
+                                await breakChain(); // Wait for breakChain() to complete before proceeding
+                              }
+                            },
+                            child: Text("Yes"),
+                          ),
+
+                        ],
+                      );
+                    },
+                  );
+                },
+                onPressed: () async {
+                  String year = await getYear();
+                  if (year == "null") {
                     setState(() {
-                      print("kırıldı");
-                      breakChain();
+                      editChain = !editChain;
                     });
-                  },
-                  onPressed: (){setState(() {
-                    editChain=true;
-                  });},
+                  }
+                },
               ),
+
+
               /* Chain */
 //todo şu widgetları taşıyabildiğin kadar dışarı taşi bide uygulamayı kapatıp tekrar açan bir fonksiyon bul oluyorsa chain üzerinden bir fonksiyon bul
               WidgetIsland(
@@ -106,23 +139,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: [
                       TextField(
-                        decoration: InputDecoration(
-                          hintText: "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
+                        decoration: const InputDecoration(
+                          hintText:
+                              "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color:
+                                  Colors.black, // Set underline color to black
+                            ),
+                          ),
                         ),
+                        cursorColor: Colors.black, // Set cursor color to black
                         onChanged: (value) {
-                          enteredText =
-                              value; // TextField'dan alınan veriyi enteredText değişkenine ata
+                          enteredText = value;
                         },
                       ),
                       TextButton(
                         onPressed: () {
                           setState(() {
-                            startChain();
+                            if (enteredText.isNotEmpty) {
+                              startChain();
+                              print(enteredText);
+                              editChain = false;
+                            }
                           });
-                          print(enteredText); // Konsola enteredText'i yazdır
-                          editChain = false;
                         },
-                        child: Text("Veriyi Al ve Yazdır"),
+                        child:
+                            Text("Veriyi Al ve Yazdır", style: buttonStyle()),
                       ),
                     ],
                   ),

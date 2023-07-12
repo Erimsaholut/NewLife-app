@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> chain() async {
@@ -10,16 +11,29 @@ Future<String> chain() async {
   if (year == null) {
     return "Şu anda zinciriniz yok. Lütfen bir tane oluşturmak için basın. Ana hedefinizi değiştirmezsiniz. Sayacı sıfırlamak için uzun basınız.";
   } else {
-    DateTime startingDate = DateTime(year!, month!, day!);
+    DateTime startingDate =
+        DateTime(year, month!, day!); // Removed unnecessary null check
     DateTime today = DateTime.now();
 
-    int daysPast = today.difference(startingDate).inDays+1;
+    int daysPast = today.difference(startingDate).inDays;
 
     return "Zinciri $daysPast gündür kırmadınız.";
   }
 }
 
+Future<String> getYear() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  print(prefs.getInt('dateTimeYear'));
+  if (prefs.getInt('dateTimeYear') == null) {
+    print("Şu an null diyor");
+    return "null";
+  } else {
+    return "notNull";
+  }
+}
+
 Future<void> startChain() async {
+  print("başlatıldı");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setInt("dateTimeYear", DateTime.now().year);
   await prefs.setInt("dateTimeMonth", DateTime.now().month);
@@ -27,6 +41,7 @@ Future<void> startChain() async {
 }
 
 Future<void> breakChain() async {
+  print("Kırldı");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('dateTimeYear');
   await prefs.remove('dateTimeMonth');

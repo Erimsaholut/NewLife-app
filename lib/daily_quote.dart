@@ -19,9 +19,10 @@ Future<String> dailyQuote() async {
     print("JSON yükleme hatası: $e");
   }
 
-  String quote = datas[todaysNumber - 1]["quote"] + "\n\n-";
+  String quote = datas[todaysNumber - 1]["quote"];
 
   if (datas[todaysNumber - 1]["owner"] != "Unknown") {
+    quote +=  "\n\n-";
     quote += datas[todaysNumber - 1]["owner"];
   }
   return quote;

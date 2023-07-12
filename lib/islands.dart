@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:new_life/tools/styles.dart';
 
 class Island extends StatelessWidget {
   final Color themeColor;
@@ -35,11 +36,7 @@ class Island extends StatelessWidget {
               child: AutoSizeText(
                 text,
                 maxLines: 6,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                style: quoteStyle(),
               ),
             ),
           ),
