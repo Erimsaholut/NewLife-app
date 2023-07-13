@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> chain() async {
@@ -23,9 +22,7 @@ Future<String> chain() async {
 
 Future<String> getYear() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  print(prefs.getInt('dateTimeYear'));
   if (prefs.getInt('dateTimeYear') == null) {
-    print("Şu an null diyor");
     return "null";
   } else {
     return "notNull";

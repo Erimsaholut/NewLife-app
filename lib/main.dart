@@ -1,11 +1,11 @@
 import 'package:new_life/daily_quote.dart' as quote_utils;
-import 'package:new_life/tools/styles.dart';
+import 'package:new_life/chain_functions.dart';
 import 'package:new_life/widgetIsland.dart';
 import 'package:flutter/material.dart';
 import 'package:new_life/islands.dart';
 import 'chain.dart' as chain_utils;
-import 'formatted_date.dart';
 import 'chain.dart';
+import 'formatted_date.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +22,7 @@ String enteredText = "";
 bool editChain = false;
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -60,6 +60,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void updateEditChain(bool newEditChain) {
+    setState(() {
+      editChain = newEditChain;
+    });
+  }
+
+  void toggleEditChain() async {
+    String year = await getYear();
+    if (year == "null") {
+      setState(() {
+        editChain = !editChain;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,100 +92,29 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             children: [
               const SizedBox(height: 20),
+
               Island(
                 themeColor: themeColor2,
                 text: formattedDate(),
               ),
               /*Tarih*/
 
-              //todo 100 satır chain
               Island(
                 themeColor: themeColor1,
                 text: chainText,
-                onLongPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text("Confirmation"),
-                        content: Text("Are you sure you want to break the chain?"),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: Text("No"),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.of(context).pop(); // Close the dialog
-                              String year = await getYear();
-                              if (year != "null") {
-                                await breakChain(); // Wait for breakChain() to complete before proceeding
-                              }
-                            },
-                            child: Text("Yes"),
-                          ),
-
-                        ],
-                      );
-                    },
-                  );
-                },
-                onPressed: () async {
-                  String year = await getYear();
-                  if (year == "null") {
-                    setState(() {
-                      editChain = !editChain;
-                    });
-                  }
-                },
+                onLongPressed: () => setAlertButton(context),
+                onPressed: toggleEditChain,
               ),
-
-
               /* Chain */
-//todo şu widgetları taşıyabildiğin kadar dışarı taşi bide uygulamayı kapatıp tekrar açan bir fonksiyon bul oluyorsa chain üzerinden bir fonksiyon bul
+
               WidgetIsland(
                 isVisible: editChain,
                 themeColor: themeColor2,
                 size: 2,
-                widget: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      TextField(
-                        decoration: const InputDecoration(
-                          hintText:
-                              "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:
-                                  Colors.black, // Set underline color to black
-                            ),
-                          ),
-                        ),
-                        cursorColor: Colors.black, // Set cursor color to black
-                        onChanged: (value) {
-                          enteredText = value;
-                        },
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            if (enteredText.isNotEmpty) {
-                              startChain();
-                              print(enteredText);
-                              editChain = false;
-                            }
-                          });
-                        },
-                        child:
-                            Text("Veriyi Al ve Yazdır", style: buttonStyle()),
-                      ),
-                    ],
-                  ),
-                ),
+                onEditChainChanged: updateEditChain,
               ),
+              /*hedef girme widgetı*/
+
               Island(
                 themeColor: themeColor3,
                 size: 2,
@@ -182,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: quoteText,
               ),
               /*quote*/
+
               Island(themeColor: themeColor3),
             ],
           ),
