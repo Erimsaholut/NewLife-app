@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:new_life/tools/styles.dart';
 
 import 'chain.dart';
-import 'main.dart';
+import '../../main.dart';
 
-class WidgetIsland extends StatelessWidget {
+class WidgetIsland extends StatefulWidget {
   final Color themeColor;
   final String text;
   final double size;
@@ -23,16 +23,21 @@ class WidgetIsland extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<WidgetIsland> createState() => _WidgetIslandState();
+}
+
+class _WidgetIslandState extends State<WidgetIsland> {
+  @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: isVisible,
+      visible: widget.isVisible,
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            height: 100 * size,
+            height: 100 * widget.size,
             decoration: BoxDecoration(
-              color: themeColor,
+              color: widget.themeColor,
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),
             ),
             child: Padding(
@@ -60,7 +65,7 @@ class WidgetIsland extends StatelessWidget {
                       if (enteredText.isNotEmpty) {
                         startChain();
                         print(enteredText);
-                        onEditChainChanged(false); // Call the callback to update the state in MyHomePage
+                        widget.onEditChainChanged(false);
                       }
                     },
                     child: Text("Veriyi Al ve Yazdır", style: buttonStyle()),

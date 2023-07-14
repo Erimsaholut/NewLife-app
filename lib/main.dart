@@ -1,11 +1,14 @@
-import 'package:new_life/daily_quote.dart' as quote_utils;
-import 'package:new_life/chain_functions.dart';
-import 'package:new_life/widgetIsland.dart';
+import 'package:new_life/functional_islands/daily_quote/daily_quote.dart'
+    as quote_utils;
+import 'package:new_life/functional_islands/chain/chain_functions.dart';
+import 'package:new_life/tools/styles.dart';
+import 'package:new_life/functional_islands/chain/widgetIsland.dart';
 import 'package:flutter/material.dart';
-import 'package:new_life/islands.dart';
-import 'chain.dart' as chain_utils;
-import 'chain.dart';
-import 'formatted_date.dart';
+import 'package:new_life/tools/islands.dart';
+import 'functional_islands/chain/chain.dart' as chain_utils;
+import 'functional_islands/chain/chain.dart';
+import 'functional_islands/showDate/formatted_date.dart';
+import 'program_maker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'New Life'),
     );
   }
 }
@@ -49,6 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     initializeChain();
+  }
+
+  void _setState() {
+    setState(() {});
   }
 
   void initializeChain() async {
@@ -79,9 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "New Life",
-          style: TextStyle(),
+          style: titleStyle(),
         ),
         backgroundColor: themeColor2,
       ),
@@ -92,7 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             children: [
               const SizedBox(height: 20),
-
               Island(
                 themeColor: themeColor2,
                 text: formattedDate(),
@@ -119,14 +125,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 themeColor: themeColor3,
                 size: 2,
               ),
-              Island(themeColor: themeColor1),
               Island(
                 themeColor: themeColor2,
                 size: 2,
                 text: quoteText,
               ),
               /*quote*/
-
+              ProgramMaker(
+                themeColor: themeColor1,
+              ),
+              /* Program oluşturma */
               Island(themeColor: themeColor3),
             ],
           ),

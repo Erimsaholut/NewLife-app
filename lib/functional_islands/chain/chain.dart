@@ -29,6 +29,7 @@ Future<String> getYear() async {
   }
 }
 
+//todo bunlar setStatelenebilir mi ki
 Future<void> startChain() async {
   print("başlatıldı");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
