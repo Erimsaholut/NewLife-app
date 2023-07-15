@@ -41,7 +41,7 @@ class _WidgetIslandState extends State<WidgetIsland> {
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   TextField(

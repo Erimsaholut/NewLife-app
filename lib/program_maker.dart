@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:new_life/tools/styles.dart';
+import 'package:flutter/material.dart';
 
 class ProgramMaker extends StatefulWidget {
   final Color themeColor;
-  final double size;
+  final int programSize;
   final VoidCallback? onLongPressed;
 
   const ProgramMaker({
     Key? key,
     required this.themeColor,
     this.onLongPressed,
-    this.size = 1,
+    this.programSize = 1,
   }) : super(key: key);
 
   @override
@@ -21,16 +20,42 @@ class ProgramMaker extends StatefulWidget {
 
 class _ProgramMakerState extends State<ProgramMaker> {
   double programSize = 1;
-  String programText = "Program oluşturmak için basınız.";
-  int targetCount = 1;
+  String programText = "Program hedefi eklemek için basınız.";
+  bool showEntry = false;
+  String testString = "";
+  List<String> targets = [];
 
-  void makeBigger() {
+  @override
+  void initState() {
+    super.initState();
+    getList();
+  }
+
+  void programPressed() {
     setState(() {
-      programSize += 1;
-      programText = "Lütfen $targetCount. hedefinizi yazınız:";
-      targetCount += 1;
+      print(targets);
+
+      showEntry = !showEntry;
+      programSize = showEntry ? 2 : 1;
     });
   }
+
+  Future<void> getList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    targets = prefs.getStringList('targets') ?? [];
+  }
+
+  Future<void> setList(String newTarget) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    targets.add(newTarget);
+    await prefs.setStringList('targets', targets);
+  }
+
+  // Future<void> resetList() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setStringList('targets', []);
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +63,55 @@ class _ProgramMakerState extends State<ProgramMaker> {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          height: 100 * widget.size,
+          height: 100 * programSize,
           decoration: BoxDecoration(
             color: widget.themeColor,
             borderRadius: const BorderRadius.all(Radius.circular(32.0)),
           ),
           child: TextButton(
-            onPressed: makeBigger,
+            onPressed: programPressed,
             onLongPress: widget.onLongPressed,
-            child: Center(
-              child: AutoSizeText(
-                programText,
-                maxLines: 6,
-                style: quoteStyle(),
-              ),
+            child: Column(
+              children: [
+                Center(
+                  child: Text(
+                    programText,
+                    style: quoteStyle(),
+                  ),
+                ),
+                Visibility(
+                  visible: showEntry,
+                  child: Column(
+                    children: [
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Lütfen ${targets.length + 1}. hedefinizi yazınız:",
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black, // Set underline color to black
+                            ),
+                          ),
+                        ),
+                        cursorColor: Colors.black,
+                        onChanged: (value) {
+                          testString = value;
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (testString.isNotEmpty) {
+                            setState(() {
+                              print(testString);
+                              setList(testString);
+                            });
+                          }
+                        },
+                        child: Text("Programa ekle", style: buttonStyle()),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -62,4 +122,3 @@ class _ProgramMakerState extends State<ProgramMaker> {
     );
   }
 }
-
