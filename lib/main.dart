@@ -1,6 +1,7 @@
 import 'package:new_life/functional_islands/daily_quote/daily_quote.dart'
     as quote_utils;
 import 'package:new_life/functional_islands/chain/chain_functions.dart';
+import 'package:new_life/test/table_test.dart';
 import 'package:new_life/tools/styles.dart';
 import 'package:new_life/functional_islands/chain/widgetIsland.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 themeColor: themeColor1,
               ),
               /* Program oluşturma */
-              Island(themeColor: themeColor3),
+              Island(
+                themeColor: themeColor3,// todo allah için şuraya güzel ve okunabilir bir renk bul.
+                text: "Table Test",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TableTest(),
+                    ),
+                  );
+                },
+              ),
+              /*table Test*/
             ],
           ),
         ),

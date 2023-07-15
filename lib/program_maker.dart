@@ -20,7 +20,7 @@ class ProgramMaker extends StatefulWidget {
 
 class _ProgramMakerState extends State<ProgramMaker> {
   double programSize = 1;
-  String programText = "Program hedefi eklemek için basınız.";
+  String programText = "Programa hedef eklemek için basınız.";
   bool showEntry = false;
   String testString = "";
   List<String> targets = [];
@@ -72,12 +72,11 @@ class _ProgramMakerState extends State<ProgramMaker> {
             onPressed: programPressed,
             onLongPress: widget.onLongPressed,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Text(
-                    programText,
-                    style: quoteStyle(),
-                  ),
+                Text(
+                  programText,
+                  style: quoteStyle(),
                 ),
                 Visibility(
                   visible: showEntry,
