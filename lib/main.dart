@@ -17,8 +17,10 @@ void main() {
 
 Color themeColor1 = const Color.fromARGB(255, 48, 227, 202);
 Color themeColor2 = const Color.fromARGB(255, 17, 153, 158);
-Color themeColor3 = const Color.fromARGB(255, 64, 81, 78);
+Color themeColor3 = const Color.fromARGB(255,5, 191, 219);
 Color themeColor4 = const Color.fromARGB(255, 228, 249, 245);
+Color themeColor5 = const Color.fromARGB(255, 100, 204, 197);
+
 
 String chainText = "";
 String quoteText = "";
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
               /*hedef girme widgetı*/
 
               Island(
-                themeColor: themeColor3,
+                themeColor: themeColor5,
                 size: 2,
               ),
               Island(
@@ -137,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               /* Program oluşturma */
               Island(
-                themeColor: themeColor3,// todo allah için şuraya güzel ve okunabilir bir renk bul.
+                themeColor: themeColor5,
                 text: "Table Test",
                 onPressed: () {
                   Navigator.push(

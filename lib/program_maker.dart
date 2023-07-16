@@ -56,7 +56,6 @@ class _ProgramMakerState extends State<ProgramMaker> {
   //   await prefs.setStringList('targets', []);
   // }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -84,10 +83,12 @@ class _ProgramMakerState extends State<ProgramMaker> {
                     children: [
                       TextField(
                         decoration: InputDecoration(
-                          hintText: "Lütfen ${targets.length + 1}. hedefinizi yazınız:",
+                          hintText:
+                              "Lütfen ${targets.length + 1}. hedefinizi yazınız:",
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.black, // Set underline color to black
+                              color:
+                                  Colors.black, // Set underline color to black
                             ),
                           ),
                         ),
