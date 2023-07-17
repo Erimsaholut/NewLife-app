@@ -44,4 +44,5 @@ Future<void> breakChain() async {
   await prefs.remove('dateTimeYear');
   await prefs.remove('dateTimeMonth');
   await prefs.remove('dateTimeDay');
+  await prefs.remove('mainTarget');
 }

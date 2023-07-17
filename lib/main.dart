@@ -1,11 +1,12 @@
 import 'package:new_life/functional_islands/daily_quote/daily_quote.dart'
-    as quote_utils;
+as quote_utils;
 import 'package:new_life/functional_islands/chain/chain_functions.dart';
 import 'package:new_life/test/table_test.dart';
 import 'package:new_life/tools/styles.dart';
 import 'package:new_life/functional_islands/chain/widgetIsland.dart';
 import 'package:flutter/material.dart';
 import 'package:new_life/tools/islands.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'functional_islands/chain/chain.dart' as chain_utils;
 import 'functional_islands/chain/chain.dart';
 import 'functional_islands/showDate/formatted_date.dart';
@@ -17,13 +18,13 @@ void main() {
 
 Color themeColor1 = const Color.fromARGB(255, 48, 227, 202);
 Color themeColor2 = const Color.fromARGB(255, 17, 153, 158);
-Color themeColor3 = const Color.fromARGB(255,5, 191, 219);
+Color themeColor3 = const Color.fromARGB(255, 5, 191, 219);
 Color themeColor4 = const Color.fromARGB(255, 228, 249, 245);
 Color themeColor5 = const Color.fromARGB(255, 100, 204, 197);
 
-
 String chainText = "";
 String quoteText = "";
+String mainTarget = "";
 String enteredText = "";
 bool editChain = false;
 
@@ -55,10 +56,22 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     initializeChain();
+    getMainTarget();
   }
 
-  void _setState() {
-    setState(() {});
+  Future<void> getMainTarget() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? target = prefs.getString('mainTarget');
+    setState(() {
+      if (target != null){
+        mainTarget = target;
+        print("ana hedef"+ mainTarget);
+      }else{
+        mainTarget = " ";
+        print("ana hedef"+ mainTarget);
+      }
+
+    });
   }
 
   void initializeChain() async {
@@ -73,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateEditChain(bool newEditChain) {
     setState(() {
       editChain = newEditChain;
+      getMainTarget();
     });
   }
 
@@ -107,7 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: formattedDate(),
               ),
               /*Tarih*/
-
+              Island(
+                themeColor: themeColor2,
+                isVisiable: (mainTarget != " "),
+                text: '"$mainTarget" hedefine devam et !!',
+              ),/*main Target*/
               Island(
                 themeColor: themeColor1,
                 text: chainText,
@@ -121,13 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 themeColor: themeColor2,
                 size: 2,
                 onEditChainChanged: updateEditChain,
+
               ),
               /*hedef girme widgetı*/
-
-              Island(
-                themeColor: themeColor5,
-                size: 2,
-              ),
               Island(
                 themeColor: themeColor2,
                 size: 2,

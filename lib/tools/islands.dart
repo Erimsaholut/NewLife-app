@@ -8,6 +8,7 @@ class Island extends StatelessWidget {
   final double size;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
+  final bool isVisiable;
 
   const Island({
     Key? key,
@@ -16,35 +17,39 @@ class Island extends StatelessWidget {
     this.onLongPressed,
     this.text = "",
     this.size = 1,
+    this.isVisiable = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          height: 100 * size,
-          decoration: BoxDecoration(
-            color: themeColor,
-            borderRadius: const BorderRadius.all(Radius.circular(32.0)),
-          ),
-          child: TextButton(
-            onPressed: onPressed,
-            onLongPress: onLongPressed,
-            child: Center(
-              child: AutoSizeText(
-                text,
-                maxLines: 6,
-                style: quoteStyle(),
+    return Visibility(
+      visible: isVisiable,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 100 * size,
+            decoration: BoxDecoration(
+              color: themeColor,
+              borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+            ),
+            child: TextButton(
+              onPressed: onPressed,
+              onLongPress: onLongPressed,
+              child: Center(
+                child: AutoSizeText(
+                  text,
+                  maxLines: 6,
+                  style: quoteStyle(),
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }

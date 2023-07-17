@@ -1,14 +1,13 @@
+import 'package:new_life/functional_islands/chain/chain.dart';
+import 'package:new_life/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:new_life/tools/styles.dart';
 
-import 'chain.dart';
-import '../../main.dart';
+import '../../tools/styles.dart';
 
 class WidgetIsland extends StatefulWidget {
   final Color themeColor;
-  final String text;
   final double size;
-  final VoidCallback? onPressed;
   final bool isVisible;
   final Function(bool) onEditChainChanged;
 
@@ -16,8 +15,6 @@ class WidgetIsland extends StatefulWidget {
     Key? key,
     required this.themeColor,
     this.isVisible = false,
-    this.onPressed,
-    this.text = "",
     this.size = 1,
     required this.onEditChainChanged,
   }) : super(key: key);
@@ -27,6 +24,35 @@ class WidgetIsland extends StatefulWidget {
 }
 
 class _WidgetIslandState extends State<WidgetIsland> {
+  late TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+    getTarget();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  Future<void> getTarget() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? targets = prefs.getString('MainTarget');
+    print(targets);
+    if (targets != null && targets.isNotEmpty) {
+
+    }
+  }
+
+  Future<void> setTarget(String mainTarget) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('mainTarget', mainTarget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -45,30 +71,28 @@ class _WidgetIslandState extends State<WidgetIsland> {
               child: Column(
                 children: [
                   TextField(
+                    controller: _textController,
                     decoration: const InputDecoration(
-                      hintText:
-                      "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
+                      hintText: "Her gün düzenli olarak yapmak istediğin ana hedefini gir.",
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color:
-                          Colors.black, // Set underline color to black
+                          color: Colors.black, // Set underline color to black
                         ),
                       ),
                     ),
                     cursorColor: Colors.black, // Set cursor color to black
-                    onChanged: (value) {
-                      enteredText = value;
-                    },
                   ),
                   TextButton(
                     onPressed: () {
+                      String enteredText = _textController.text.trim();
                       if (enteredText.isNotEmpty) {
-                        startChain();
                         print(enteredText);
+                        setTarget(enteredText);
+                        startChain();
                         widget.onEditChainChanged(false);
                       }
                     },
-                    child: Text("Veriyi Al ve Yazdır", style: buttonStyle()),
+                    child: Text("Veriyi Al ve Yazdır",style: buttonStyle(),),
                   ),
                 ],
               ),
@@ -82,5 +106,3 @@ class _WidgetIslandState extends State<WidgetIsland> {
     );
   }
 }
-
-
