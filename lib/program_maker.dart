@@ -51,10 +51,11 @@ class _ProgramMakerState extends State<ProgramMaker> {
     await prefs.setStringList('targets', targets);
   }
 
-  // Future<void> resetList() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setStringList('targets', []);
-  // }
+  Future<void> resetList() async {
+    print('reset');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('targets', []);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class _ProgramMakerState extends State<ProgramMaker> {
           ),
           child: TextButton(
             onPressed: programPressed,
-            onLongPress: widget.onLongPressed,
+            onLongPress: resetList,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
