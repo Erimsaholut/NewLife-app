@@ -13,6 +13,14 @@ TextStyle quoteStyle() {
   );
 }
 
+TextStyle quoteStyleSmall() {
+  return const TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+  );
+}
+
 TextStyle titleStyle() {
   return const TextStyle(
     color: Colors.white,
@@ -23,7 +31,7 @@ TextStyle titleStyle() {
 }
 
 BoxDecoration tableDecoration() {
-  return BoxDecoration(
+  return const BoxDecoration(
     color: Colors.redAccent,
   );
 }

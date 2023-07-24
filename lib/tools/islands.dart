@@ -29,6 +29,7 @@ class Island extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             height: 100 * size,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: themeColor,
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),

@@ -1,20 +1,23 @@
 import 'package:new_life/functional_islands/daily_quote/daily_quote.dart'
-as quote_utils;
+    as quote_utils;
 import 'package:new_life/functional_islands/chain/chain_functions.dart';
-import 'package:new_life/test/table_test.dart';
-import 'package:new_life/tools/styles.dart';
 import 'package:new_life/functional_islands/chain/widgetIsland.dart';
-import 'package:flutter/material.dart';
-import 'package:new_life/tools/islands.dart';
+import 'package:new_life/functional_islands/programCheck/program_check.dart';
+import 'functional_islands/summary_and_history/table_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'functional_islands/chain/chain.dart' as chain_utils;
-import 'functional_islands/chain/chain.dart';
 import 'functional_islands/showDate/formatted_date.dart';
+import 'package:new_life/tools/styles.dart';
+import 'package:new_life/tools/islands.dart';
+import 'functional_islands/chain/chain.dart';
+import 'package:flutter/material.dart';
 import 'program_maker.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+//todo tools kısmına genel bir alert widgetı yapıp(ya da nasıl oluyorsa hedefleri sıfırlamak ister misin diye sordurt)
 
 Color themeColor1 = const Color.fromARGB(255, 48, 227, 202);
 Color themeColor2 = const Color.fromARGB(255, 17, 153, 158);
@@ -63,14 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? target = prefs.getString('mainTarget');
     setState(() {
-      if (target != null){
+      if (target != null) {
         mainTarget = target;
-        print("ana hedef"+ mainTarget);
-      }else{
+        print("ana hedef" + mainTarget);
+      } else {
         mainTarget = " ";
-        print("ana hedef"+ mainTarget);
+        print("ana hedef" + mainTarget);
       }
-
     });
   }
 
@@ -125,7 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 themeColor: themeColor2,
                 isVisiable: (mainTarget != " "),
                 text: '"$mainTarget" hedefine devam et !!',
-              ),/*main Target*/
+              ),
+              /*main Target*/
               Island(
                 themeColor: themeColor1,
                 text: chainText,
@@ -133,15 +136,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: toggleEditChain,
               ),
               /* Chain */
-
               WidgetIsland(
                 isVisible: editChain,
                 themeColor: themeColor2,
                 size: 2,
                 onEditChainChanged: updateEditChain,
-
               ),
               /*hedef girme widgetı*/
+
+              ProgramCheck(themeColor: themeColor5),
+              /* Programdan hedefleri ekleme kısmı */
+
               Island(
                 themeColor: themeColor2,
                 size: 2,
@@ -154,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
               /* Program oluşturma */
               Island(
                 themeColor: themeColor5,
-                text: "Table Test",
+                text: "Özet ve Geçmiş",
                 onPressed: () {
                   Navigator.push(
                     context,

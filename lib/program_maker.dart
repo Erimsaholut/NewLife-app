@@ -34,7 +34,6 @@ class _ProgramMakerState extends State<ProgramMaker> {
   void programPressed() {
     setState(() {
       print(targets);
-
       showEntry = !showEntry;
       programSize = showEntry ? 2 : 1;
     });
@@ -55,6 +54,8 @@ class _ProgramMakerState extends State<ProgramMaker> {
     print('reset');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setStringList('targets', []);
+    targets = prefs.getStringList('targets') ?? [];
+    programPressed();
   }
 
   @override
@@ -64,6 +65,7 @@ class _ProgramMakerState extends State<ProgramMaker> {
         Container(
           padding: const EdgeInsets.all(10),
           height: 100 * programSize,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: widget.themeColor,
             borderRadius: const BorderRadius.all(Radius.circular(32.0)),
@@ -96,6 +98,7 @@ class _ProgramMakerState extends State<ProgramMaker> {
                         cursorColor: Colors.black,
                         onChanged: (value) {
                           testString = value;
+                          value = "";
                         },
                       ),
                       TextButton(
@@ -104,7 +107,9 @@ class _ProgramMakerState extends State<ProgramMaker> {
                             setState(() {
                               print(testString);
                               setList(testString);
+
                             });
+                            programPressed();
                           }
                         },
                         child: Text("Programa ekle", style: buttonStyle()),

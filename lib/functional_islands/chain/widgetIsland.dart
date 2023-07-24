@@ -62,6 +62,7 @@ class _WidgetIslandState extends State<WidgetIsland> {
           Container(
             padding: const EdgeInsets.all(10),
             height: 100 * widget.size,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: widget.themeColor,
               borderRadius: const BorderRadius.all(Radius.circular(32.0)),

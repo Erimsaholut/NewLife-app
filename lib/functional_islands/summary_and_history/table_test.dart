@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import '../../tools/styles.dart';
 
 class TableTest extends StatefulWidget {
   const TableTest({Key? key}) : super(key: key);
@@ -52,10 +53,10 @@ class _TableTestState extends State<TableTest> {
           child: Column(
             children: [
               Text(
-                'Bu Hafta: ${DateFormat('dd.MM.yyyy').format(weekStartDate)} - ${DateFormat('dd.MM.yyyy').format(weekEndDate)}',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                '${DateFormat('dd.MM.yyyy').format(weekStartDate)} - ${DateFormat('dd.MM.yyyy').format(weekEndDate)}',
+                style:  quoteStyleSmall(),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Table(
                 border: TableBorder.all(),
                 columnWidths: const <int, TableColumnWidth>{
@@ -72,7 +73,7 @@ class _TableTestState extends State<TableTest> {
                             colIndex == 0
                                 ? ''
                                 : ['Pzt', 'Sal', 'Çrş', 'Prş', 'Cum', 'Cts', 'Pzr'][(colIndex - 1) % 7],
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -88,6 +89,7 @@ class _TableTestState extends State<TableTest> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               colIndex == 0 ? myTargets[rowIndex] : '',
+                              style: quoteStyleSmall(),
                             ),
                           ),
                         ),
