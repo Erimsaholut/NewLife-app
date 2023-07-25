@@ -38,24 +38,40 @@ class _ProgramCheckState extends State<ProgramCheck> {
     prepareLists();
   }
 
-  prepareLists() {
+  void prepareLists() {
     buttons = [];
-    //todo bunu işte widgetla
-
-    for (int i = 0; targets.length > i; i++) {
-
-      buttons.add(Container(
-        width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          ),
-
-        child: TextButton(
-          onPressed: () {},
-          child: Text(targets[i]),
+    bool pressed = false;
+    for (int i = 0; i < targets.length; i++) {
+      buttons.add(
+        Column(
+          children: [
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  pressed = !pressed;
+                  print("ss$pressed");
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: pressed ? Colors.red : Colors.green,
+                  borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    targets[i],
+                    style: const TextStyle(color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ),);
+      );
     }
   }
 
